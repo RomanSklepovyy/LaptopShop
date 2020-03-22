@@ -35,9 +35,18 @@ const server = http.createServer(((req, res) => {
             const output = replaceTemplate(data, laptop);
             res.end(output);
         }));
+    }
+
+    // IMAGES
+    else if ((/\.(jpg|jpeg|png|gif)$/i).test(pathName)) {
+        fs.readFile(`${__dirname}/data/img${pathName}`, (err, data) => {
+            res.writeHead(200,  {'Content-type': 'image/jpg'});
+            res.end(data);
+        });
+    }
 
     // URL not found
-    } else {
+    else {
         res.writeHead(200,  {'Content-type': 'text/html'});
         res.end('false URL');
     }
